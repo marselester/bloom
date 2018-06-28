@@ -81,3 +81,19 @@ desired_prob = 0.01
 hash_qty = -ln(desired_prob) / ln(2)
 bit_array_len = -max_elements * ln(desired_prob) / (ln(2) * ln(2))
 ```
+
+## Testing
+
+Install go-fuzz.
+
+```sh
+$ go get github.com/dvyukov/go-fuzz/go-fuzz
+$ go get github.com/dvyukov/go-fuzz/go-fuzz-build
+```
+
+Start the fuzzing and see if there are crashers.
+
+```sh
+$ go-fuzz-build github.com/marselester/bloom
+$ go-fuzz -bin=bloom-fuzz.zip -workdir=fuzz
+```

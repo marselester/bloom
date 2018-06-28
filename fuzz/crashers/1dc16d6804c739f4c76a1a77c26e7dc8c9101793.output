@@ -1,0 +1,61 @@
+program hanged (timeout 10 seconds)
+
+SIGABRT: abort
+PC=0x104df6c m=0 sigcode=0
+
+goroutine 0 [idle]:
+runtime.memclrNoHeapPointers(0xc42008a000, 0x26571a000)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/memclr_amd64.s:101 +0x17c
+runtime.(*mheap).alloc(0x116b540, 0x132b8d, 0x7ffeef010101, 0x101157c)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/mheap.go:758 +0xdc
+runtime.largeAlloc(0x2657198b0, 0x1040101, 0x11a6000)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/malloc.go:826 +0x94
+runtime.mallocgc.func1()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/malloc.go:721 +0x46
+runtime.systemstack(0x0)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/asm_amd64.s:409 +0x79
+runtime.mstart()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/proc.go:1175
+
+goroutine 1 [running]:
+runtime.systemstack_switch()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/asm_amd64.s:363 fp=0xc420048d78 sp=0xc420048d70 pc=0x104b380
+runtime.mallocgc(0x2657198b0, 0x10be7e0, 0xc0226bb1bbb55501, 0x3fe62e42fefa39ef)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/malloc.go:720 +0x8a2 fp=0xc420048e18 sp=0xc420048d78 pc=0x100dcb2
+runtime.makeslice(0x10be7e0, 0x4cae3316, 0x4cae3316, 0x8, 0x0, 0x0)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/slice.go:61 +0x77 fp=0xc420048e48 sp=0xc420048e18 pc=0x1039317
+github.com/marselester/bloom.New(0xffffffff, 0x3f1a36e2eb1c432d, 0x105d6e6, 0x5b34ea2b, 0x8db6bb1)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/gopath/src/github.com/marselester/bloom/bloom.go:54 +0x1c7 fp=0xc420048ec0 sp=0xc420048e48 pc=0x10ad6f7
+github.com/marselester/bloom.Fuzz(0x1216000, 0x14, 0x200000, 0x3)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/gopath/src/github.com/marselester/bloom/fuzz.go:6 +0x51 fp=0xc420048f00 sp=0xc420048ec0 pc=0x10ae1b1
+go-fuzz-dep.Main(0x10e6f28)
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/go-fuzz-dep/main.go:49 +0xad fp=0xc420048f70 sp=0xc420048f00 pc=0x10616ad
+main.main()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/gopath/src/github.com/marselester/bloom/go.fuzz.main/main.go:10 +0x2d fp=0xc420048f88 sp=0xc420048f70 pc=0x10ae36d
+runtime.main()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/proc.go:198 +0x212 fp=0xc420048fe0 sp=0xc420048f88 pc=0x1027722
+runtime.goexit()
+	/var/folders/yf/9_cj5vb55g5flmk4rw8jkpt80000gn/T/go-fuzz-build216363451/goroot/src/runtime/asm_amd64.s:2361 +0x1 fp=0xc420048fe8 sp=0xc420048fe0 pc=0x104d811
+
+rax    0x0
+rbx    0x1742bf060
+rcx    0x26571a000
+rdx    0x116b540
+rdi    0xc5114e4fa0
+rsi    0xffffffffffffffe0
+rbp    0x7ffeefbff930
+rsp    0x7ffeefbff8e8
+r8     0xc000000000
+r9     0x132bd1
+r10    0x10f161b
+r11    0x6
+r12    0x0
+r13    0x30
+r14    0xd8
+r15    0x80
+rip    0x104df6c
+rflags 0x10202
+cs     0x2b
+fs     0x0
+gs     0x0
+exit status 2
