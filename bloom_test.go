@@ -6,7 +6,7 @@ import (
 )
 
 func TestOptimalBitLen(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		n    uint32
 		prob float64
 		want uint64
@@ -17,7 +17,7 @@ func TestOptimalBitLen(t *testing.T) {
 		{4294967295, 0.01, 41167512252}, // 5.146 GB
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		got := optimalBitLen(tc.n, tc.prob)
 		if got != tc.want {
 			t.Errorf("optimalBitLen(%d, %f) = %d, want %d", tc.n, tc.prob, got, tc.want)
@@ -26,7 +26,7 @@ func TestOptimalBitLen(t *testing.T) {
 }
 
 func TestOptimalHashQty(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		prob float64
 		want byte
 	}{
@@ -37,7 +37,7 @@ func TestOptimalHashQty(t *testing.T) {
 		{0.0001001231231, 14},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		got := optimalHashQty(tc.prob)
 		if got != tc.want {
 			t.Errorf("optimalHashQty(%f) = %d, want %d", tc.prob, got, tc.want)
@@ -46,7 +46,7 @@ func TestOptimalHashQty(t *testing.T) {
 }
 
 func TestHash(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		b      string
 		bitlen uint64
 		want   uint64
@@ -59,7 +59,7 @@ func TestHash(t *testing.T) {
 		{"test3", 48, 23},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		got, err := hash([]byte(tc.b), tc.bitlen)
 		if err != nil {
 			t.Fatal(err)
@@ -83,7 +83,7 @@ func equal(s1, s2 []uint64) bool {
 }
 
 func TestBitpositions(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		element string
 		hashqty byte
 		bitlen  uint64
@@ -92,7 +92,7 @@ func TestBitpositions(t *testing.T) {
 		{"test", 4, 48, []uint64{7, 36, 32, 37}},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		got, err := bitpositions([]byte(tc.element), tc.hashqty, tc.bitlen)
 		if err != nil {
 			t.Fatal(err)
@@ -104,7 +104,7 @@ func TestBitpositions(t *testing.T) {
 }
 
 func TestBitlocation(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		pos        uint64
 		bitsize    byte
 		wantIndex  int
@@ -173,7 +173,7 @@ func TestBitlocation(t *testing.T) {
 		},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		index, offset := bitlocation(tc.pos, tc.bitsize)
 		if index != tc.wantIndex || offset != tc.wantOffset {
 			t.Errorf("bitlocation(%d, %d) = %d, %d, want %d, %d", tc.pos, tc.bitsize, index, offset, tc.wantIndex, tc.wantOffset)
@@ -208,7 +208,7 @@ func TestFilter_Has(t *testing.T) {
 		bitstore: []uint64{210453397632}, // "test" int representation of bit positions.
 	}
 
-	tests := []struct {
+	tt := []struct {
 		element []byte
 		want    bool
 	}{
@@ -217,7 +217,7 @@ func TestFilter_Has(t *testing.T) {
 		{nil, false},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		got, err := bf.Has(tc.element)
 		if err != nil {
 			t.Fatal(err)
@@ -229,7 +229,7 @@ func TestFilter_Has(t *testing.T) {
 }
 
 func TestNew_error(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		n    uint32
 		prob float64
 		want error
@@ -239,7 +239,7 @@ func TestNew_error(t *testing.T) {
 		{1, -0.1, ErrProbability},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		_, err := New(tc.n, tc.prob)
 		if err != tc.want {
 			t.Errorf("New(%d, %f) error: %q, want %q", tc.n, tc.prob, err, tc.want)
@@ -248,7 +248,7 @@ func TestNew_error(t *testing.T) {
 }
 
 func TestNew(t *testing.T) {
-	tests := []struct {
+	tt := []struct {
 		name string
 		n    uint32
 		prob float64
@@ -316,7 +316,7 @@ func TestNew(t *testing.T) {
 		},
 	}
 
-	for _, tc := range tests {
+	for _, tc := range tt {
 		t.Run(tc.name, func(t *testing.T) {
 			got, err := New(tc.n, tc.prob)
 			if err != nil {
