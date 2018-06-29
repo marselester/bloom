@@ -82,7 +82,7 @@ hash_qty = -ln(desired_prob) / ln(2)
 bit_array_len = -max_elements * ln(desired_prob) / (ln(2) * ln(2))
 ```
 
-## Testing
+## Tests
 
 Install go-fuzz.
 
@@ -96,4 +96,17 @@ Start the fuzzing and see if there are crashers.
 ```sh
 $ go-fuzz-build github.com/marselester/bloom
 $ go-fuzz -bin=bloom-fuzz.zip -workdir=fuzz
+```
+
+## Benchmarks
+
+This Bloom filter implementation certainly has room for improvement, e.g., reduce the number of memory allocations
+or try to hash in parallel. Though the objective here is to keep code simple.
+
+```sh
+$ go test -bench=. -benchmem
+BenchmarkFilter_Add/1.198MB-4         	  300000	      4254 ns/op	    1888 B/op	      30 allocs/op
+BenchmarkFilter_Add/2.573GB-4         	  300000	      5198 ns/op	    1888 B/op	      30 allocs/op
+BenchmarkFilter_Has/1.198MB-4         	  300000	      4269 ns/op	    1888 B/op	      30 allocs/op
+BenchmarkFilter_Has/2.573GB-4         	  300000	      4285 ns/op	    1888 B/op	      30 allocs/op
 ```

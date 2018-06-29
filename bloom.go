@@ -75,6 +75,8 @@ func (bf *Filter) Add(element []byte) error {
 // Has tests if the element is in the set. The error in unlikely to happen,
 // unless underlying hash function fails.
 func (bf *Filter) Has(element []byte) (bool, error) {
+	// bitpositions is used here for simplicity, though returning earlier
+	// when a bit in question is zero will give performance increase.
 	pos, err := bitpositions(element, bf.hashqty, bf.bitlen)
 	if err != nil {
 		return false, err
