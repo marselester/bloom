@@ -5,6 +5,8 @@
 
 This is a Bloom filter implementation just for fun. Databases use them to reduce the disk lookups for non-existent rows or columns.
 Avoiding costly disk lookups considerably increases the performance of a database query operation.
+For instance, we can avoid unnecessary key lookups in segment files if a Bloom filter leveraged by
+[RascalDB](https://github.com/marselester/rascaldb).
 
 A [Bloom filter](https://en.wikipedia.org/wiki/Bloom_filter) is a space-efficient probabilistic data structure
 that is used to test whether an element is a member of a set.
