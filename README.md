@@ -65,6 +65,9 @@ To check if an element is a member of a set, all bits must be 1 on those positio
 The element was transformed into indexes by applying 4 hash functions. A hash function (in this package)
 uses sha256 digest (hex) and converts it into a decimal number (from base 16 number into base 10 number).
 Since we need 4 distinct hash functions, we can append a number to an element.
+Note, a cryptographic hash function is used here to achieve the best uniformity and keep the code simple
+(it depends only on the standard library). There are faster hash functions for the job, for instance,
+[Murmur3](https://github.com/bitly/dablooms/pull/19).
 
 ```
 hex2dec(sha256("test0")) == 7
@@ -102,8 +105,8 @@ $ go-fuzz -bin=bloom-fuzz.zip -workdir=fuzz
 
 ## Benchmarks
 
-This Bloom filter implementation certainly has room for improvement, e.g., reduce the number of memory allocations
-or try to hash in parallel. Though the objective here is to keep code simple.
+This Bloom filter implementation certainly has room for improvement, e.g., use faster hash function,
+reduce the number of memory allocations or try to hash in parallel. Though the objective here is to keep code simple.
 
 ```sh
 $ go test -bench=. -benchmem
